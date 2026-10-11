@@ -323,10 +323,39 @@
 
 @media (max-width: 640px) {
   .card {
-    padding: 1.5rem;
-    gap: 1.25rem;
+    padding: 1.25rem;
+    gap: 1.2rem;
+    border-radius: var(--radius-lg);
+  }
+  .presetsBar {
+    gap: 0.65rem;
+  }
+  .presetButtons {
+    gap: 0.45rem;
+  }
+  .presetBtn {
+    font-size: 0.74rem;
+    padding: 0.38rem 0.75rem;
+  }
+  .textarea {
+    font-size: 16px; /* Prevents iOS auto-zoom */
+    min-height: 115px;
+    padding: 0.9rem 1rem;
+  }
+  .ratingField {
+    padding: 0.85rem 1rem;
+  }
+  .starsTrack {
+    gap: 0.25rem;
+  }
+  .starBtn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
   }
   .submitBtn {
     width: 100%;
+    min-height: 48px;
+    font-size: 0.95rem;
   }
 }
