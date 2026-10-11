@@ -1,0 +1,24 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+.pytest_cache/
+
+# Large ML data & models
+data/*.csv
+models/*.pkl
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.wrangler/
+
+# System
+.DS_Store
+*.log
+.vscode/
+.idea/

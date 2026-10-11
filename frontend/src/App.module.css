@@ -1,0 +1,105 @@
+/* App.module.css — Apple iOS 27 Layout */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: var(--clr-bg);
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  position: relative;
+  z-index: 10;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.metricsSection {
+  width: 100%;
+}
+
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 69, 58, 0.1);
+  border: 1px solid rgba(255, 69, 58, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.35rem;
+  color: #ff857d;
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: fadeIn 0.3s var(--ease-spring);
+  box-shadow: 0 8px 24px rgba(255, 69, 58, 0.15);
+}
+
+.errorIcon {
+  flex-shrink: 0;
+  color: var(--clr-system-red);
+}
+
+.footer {
+  text-align: center;
+  padding: 2.25rem 1.5rem;
+  border-top: 1px solid var(--clr-border-subtle);
+  position: relative;
+  z-index: 10;
+  background: rgba(6, 8, 14, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.footerInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  color: var(--clr-text-tertiary);
+  letter-spacing: -0.01em;
+}
+
+.footerBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--clr-text-secondary);
+  font-weight: 500;
+}
+
+.footerDivider {
+  color: var(--clr-text-quaternary);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: 0.5rem 1.25rem 3.5rem;
+    gap: 3rem;
+  }
+}

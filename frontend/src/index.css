@@ -1,0 +1,137 @@
+/* ============================================================
+   Apple iOS 27 / Spatial Computing Design System — ReviewGuard
+   Ultra-refined glassmorphism, SF typography, Apple System palette
+   Zero emojis as icons — 100% Crisp Vector Iconography
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* Apple OLED Cosmic Palette */
+  --clr-bg:                 #06080e;
+  --clr-bg-subtle:          #0a0e18;
+  --clr-surface:            rgba(18, 22, 34, 0.6);
+  --clr-surface-elevated:   rgba(26, 32, 50, 0.65);
+  --clr-surface-card:       rgba(25, 30, 48, 0.45);
+  
+  /* Apple Hairline Specular Borders */
+  --clr-border:             rgba(255, 255, 255, 0.08);
+  --clr-border-highlight:   rgba(255, 255, 255, 0.18);
+  --clr-border-subtle:      rgba(255, 255, 255, 0.05);
+
+  /* Apple System Palette (iOS / visionOS) */
+  --clr-system-blue:        #0a84ff;
+  --clr-system-indigo:      #5e5ce6;
+  --clr-system-purple:      #bf5af2;
+  --clr-system-pink:        #ff375f;
+  --clr-system-red:         #ff453a;
+  --clr-system-orange:      #ff9f0a;
+  --clr-system-yellow:      #ffd60a;
+  --clr-system-green:       #30d158;
+  --clr-system-mint:        #63e6e2;
+  --clr-system-teal:        #40c8e0;
+  --clr-system-cyan:        #64d2ff;
+
+  /* Semantic Brand Accents */
+  --clr-brand:              #0a84ff;
+  --clr-brand-glow:         rgba(10, 132, 255, 0.35);
+  --clr-fake:               #ff453a;
+  --clr-fake-glow:          rgba(255, 69, 58, 0.35);
+  --clr-real:               #30d158;
+  --clr-real-glow:          rgba(48, 209, 88, 0.35);
+  --clr-warning:            #ff9f0a;
+
+  /* Apple Typography Colors */
+  --clr-text:               #ffffff;
+  --clr-text-secondary:     rgba(235, 235, 245, 0.72);
+  --clr-text-tertiary:      rgba(235, 235, 245, 0.48);
+  --clr-text-quaternary:    rgba(235, 235, 245, 0.28);
+
+  /* Apple Squircle Radius Tokens */
+  --radius-xs:              6px;
+  --radius-sm:              10px;
+  --radius-md:              16px;
+  --radius-lg:              24px;
+  --radius-xl:              32px;
+  --radius-full:            9999px;
+
+  /* Apple VisionOS Materials & Shadows */
+  --glass-blur:             blur(30px) saturate(190%);
+  --glass-shadow:           0 24px 60px -15px rgba(0, 0, 0, 0.65), 
+                            inset 0 1px 0 rgba(255, 255, 255, 0.16),
+                            inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --glass-card-hover:       0 32px 70px -12px rgba(0, 0, 0, 0.75), 
+                            inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                            inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  
+  /* Apple Easing Curves */
+  --ease-spring:            cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth:            cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition:             0.25s var(--ease-spring);
+  --transition-smooth:      0.35s var(--ease-smooth);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  line-height: 1.5;
+  letter-spacing: -0.012em;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(10, 132, 255, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 90% 40%, rgba(94, 92, 230, 0.08) 0%, transparent 60%);
+}
+
+/* Apple-style ultra-thin scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+/* Apple Selection */
+::selection {
+  background: rgba(10, 132, 255, 0.4);
+  color: #ffffff;
+}
+
+/* Apple Focus Ring */
+:focus-visible {
+  outline: 2px solid var(--clr-system-blue);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
