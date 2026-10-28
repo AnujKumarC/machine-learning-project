@@ -2,7 +2,7 @@
 > **Machine Learning Course Project** · Comprehensive Technical Documentation & Architecture Guide  
 > Built with **Python (Scikit-Learn, NLTK, FastAPI)** & **React (Vite, Apple iOS 27 Design System)**
 
-🌐 **Live Web Application:** [https://thetruemava.pages.dev/](https://thetruemava.pages.dev/)  
+🌐 **Live Web Application:** [https://reviewguard-9li.pages.dev/](https://reviewguard-9li.pages.dev/)  
 📂 **GitHub Repository:** [https://github.com/AnujKumarC/machine-learning-project](https://github.com/AnujKumarC/machine-learning-project)
 
 
