@@ -1,7 +1,16 @@
 /* ============================================================
-   Apple iOS 27 / Spatial Computing Design System — ReviewGuard
-   Ultra-refined glassmorphism, SF typography, Apple System palette
-   Zero emojis as icons — 100% Crisp Vector Iconography
+   ReviewGuard — Apple-Inspired Graphite Dark Design System
+   Layered graphite & charcoal luminance hierarchy:
+   - Base Canvas:         #202124 (Tonal gradient to #2A2D34)
+   - Secondary Surface:   #25272D
+   - Navigation Surface:  #292B31
+   - Primary Workspace:   #30333B
+   - Elevated Surface:    #363A43
+   - Hover Surface:       #404550
+   - Primary Accent:      #7AA7FF (Apple Restrained Blue)
+   - Primary Text:        #F5F5F7
+   - Secondary Text:      #C1C5CE
+   - Muted Text:          #989EAA
    ============================================================ */
 
 *, *::before, *::after {
@@ -14,118 +23,140 @@
 }
 
 :root {
-  /* Apple OLED Cosmic Palette */
-  --clr-bg:                 #06080e;
-  --clr-bg-subtle:          #0a0e18;
-  --clr-surface:            rgba(18, 22, 34, 0.6);
-  --clr-surface-elevated:   rgba(26, 32, 50, 0.65);
-  --clr-surface-card:       rgba(25, 30, 48, 0.45);
-  
-  /* Apple Hairline Specular Borders */
-  --clr-border:             rgba(255, 255, 255, 0.08);
-  --clr-border-highlight:   rgba(255, 255, 255, 0.18);
-  --clr-border-subtle:      rgba(255, 255, 255, 0.05);
+  color-scheme: dark;
 
-  /* Apple System Palette (iOS / visionOS) */
-  --clr-system-blue:        #0a84ff;
-  --clr-system-indigo:      #5e5ce6;
-  --clr-system-purple:      #bf5af2;
-  --clr-system-pink:        #ff375f;
-  --clr-system-red:         #ff453a;
-  --clr-system-orange:      #ff9f0a;
-  --clr-system-yellow:      #ffd60a;
-  --clr-system-green:       #30d158;
-  --clr-system-mint:        #63e6e2;
-  --clr-system-teal:        #40c8e0;
-  --clr-system-cyan:        #64d2ff;
+  /* ── Graphite Background & Surface Hierarchy ── */
+  --clr-bg:                 #202124;
+  --clr-bg-gradient:        linear-gradient(145deg, #292B31 0%, #22242A 48%, #2A2D34 100%);
+  --clr-bg-secondary:       #25272D;
+  --clr-nav:                #292B31;
+  --clr-surface:            #30333B;
+  --clr-surface-elevated:   #363A43;
+  --clr-surface-hover:      #404550;
+  --clr-surface-inset:      #252830;
 
-  /* Semantic Brand Accents */
-  --clr-brand:              #0a84ff;
-  --clr-brand-glow:         rgba(10, 132, 255, 0.35);
-  --clr-fake:               #ff453a;
-  --clr-fake-glow:          rgba(255, 69, 58, 0.35);
-  --clr-real:               #30d158;
-  --clr-real-glow:          rgba(48, 209, 88, 0.35);
-  --clr-warning:            #ff9f0a;
+  /* ── Typography Colors ── */
+  --clr-text-primary:       #F5F5F7;
+  --clr-text-secondary:     #C1C5CE;
+  --clr-text-muted:         #989EAA;
+  --clr-text-quaternary:    #767D8C;
 
-  /* Apple Typography Colors */
-  --clr-text:               #ffffff;
-  --clr-text-secondary:     rgba(235, 235, 245, 0.72);
-  --clr-text-tertiary:      rgba(235, 235, 245, 0.48);
-  --clr-text-quaternary:    rgba(235, 235, 245, 0.28);
+  /* ── Subtle Apple Borders ── */
+  --clr-border:             rgba(255, 255, 255, 0.10);
+  --clr-border-subtle:      rgba(255, 255, 255, 0.06);
+  --clr-border-strong:      rgba(255, 255, 255, 0.16);
+  --clr-border-focus:       rgba(122, 167, 255, 0.60);
 
-  /* Apple Squircle Radius Tokens */
+  /* ── Apple Semantic Accents ── */
+  --clr-brand:              #7AA7FF;
+  --clr-brand-hover:        #96B8FF;
+  --clr-brand-bg:           rgba(122, 167, 255, 0.12);
+  --clr-brand-border:       rgba(122, 167, 255, 0.28);
+
+  --clr-success:            #56D69A;
+  --clr-success-bg:         rgba(86, 214, 154, 0.12);
+  --clr-success-border:     rgba(86, 214, 154, 0.28);
+
+  --clr-warning:            #F2C66D;
+  --clr-warning-bg:         rgba(242, 198, 109, 0.12);
+  --clr-warning-border:     rgba(242, 198, 109, 0.28);
+
+  --clr-error:              #FF777D;
+  --clr-error-bg:           rgba(255, 119, 125, 0.12);
+  --clr-error-border:       rgba(255, 119, 125, 0.28);
+
+  /* Model Accents */
+  --clr-svm:                #F2C66D;
+  --clr-svm-bg:             rgba(242, 198, 109, 0.12);
+  --clr-lr:                 #A491FB;
+  --clr-rf:                 #FF8CB7;
+  --clr-nb:                 #5BD8F0;
+
+  /* ── Depth & Elevation Shadows (Low-opacity black + ambient depth) ── */
+  --shadow-sm:              0 2px 6px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-card:            0 12px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.10);
+  --shadow-elevated:        0 18px 44px -6px rgba(0, 0, 0, 0.26), 0 4px 12px rgba(0, 0, 0, 0.14);
+  --shadow-btn:             0 4px 14px rgba(122, 167, 255, 0.28), 0 1px 2px rgba(0, 0, 0, 0.16);
+
+  /* ── Navigation ── */
+  --nav-bg:                 rgba(41, 43, 49, 0.88);
+  --nav-border:             rgba(255, 255, 255, 0.10);
+
+  /* ── Radii ── */
   --radius-xs:              6px;
-  --radius-sm:              10px;
-  --radius-md:              16px;
-  --radius-lg:              24px;
-  --radius-xl:              32px;
+  --radius-sm:              8px;
+  --radius-md:              12px;
+  --radius-lg:              18px;
+  --radius-xl:              22px;
   --radius-full:            9999px;
 
-  /* Apple VisionOS Materials & Shadows */
-  --glass-blur:             blur(30px) saturate(190%);
-  --glass-shadow:           0 24px 60px -15px rgba(0, 0, 0, 0.65), 
-                            inset 0 1px 0 rgba(255, 255, 255, 0.16),
-                            inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-  --glass-card-hover:       0 32px 70px -12px rgba(0, 0, 0, 0.75), 
-                            inset 0 1px 0 rgba(255, 255, 255, 0.25),
-                            inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-  
-  /* Apple Easing Curves */
+  /* ── Transitions ── */
   --ease-spring:            cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-smooth:            cubic-bezier(0.25, 0.1, 0.25, 1);
-  --transition:             0.25s var(--ease-spring);
-  --transition-smooth:      0.35s var(--ease-smooth);
+  --transition-fast:        0.16s ease;
+  --transition-normal:      0.20s var(--ease-spring);
+  --transition-smooth:      0.28s var(--ease-spring);
 }
 
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  background-color: var(--clr-bg);
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
   background-color: var(--clr-bg);
-  color: var(--clr-text);
+  background-image: var(--clr-bg-gradient);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: var(--clr-text-primary);
   line-height: 1.5;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.011em;
   min-height: 100vh;
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(10, 132, 255, 0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 50% at 90% 40%, rgba(94, 92, 230, 0.08) 0%, transparent 60%);
 }
 
-/* Apple-style ultra-thin scrollbar */
+/* Apple squircle scrollbars */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--clr-border-strong);
   border-radius: var(--radius-full);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.32);
+  background: var(--clr-text-muted);
 }
 
-/* Apple Selection */
+/* Selection */
 ::selection {
-  background: rgba(10, 132, 255, 0.4);
+  background: rgba(122, 167, 255, 0.28);
   color: #ffffff;
 }
 
-/* Apple Focus Ring */
+/* Focus Indicator — Apple Blue ring */
 :focus-visible {
-  outline: 2px solid var(--clr-system-blue);
-  outline-offset: 3px;
-  border-radius: var(--radius-sm);
+  outline: 2px solid var(--clr-brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
 }
 
-/* Accessibility */
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Screen reader only utility */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -134,5 +165,6 @@ body {
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
   border: 0;
 }

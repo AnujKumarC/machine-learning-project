@@ -1,78 +1,94 @@
-import { useState } from 'react'
-import { AlertCircle, Shield, Sparkles } from 'lucide-react'
+import { useState, useCallback, useEffect } from 'react'
+import { AlertCircle, Shield } from 'lucide-react'
 import Header from './components/Header'
 import ReviewForm from './components/ReviewForm'
 import ResultCard from './components/ResultCard'
 import MetricsPanel from './components/MetricsPanel'
-import Background from './components/Background'
 import styles from './App.module.css'
 
-// ── Mock data so the UI works seamlessly with or without backend ──────────
+// ── Baseline benchmark data for model comparison matrix ──
 const MOCK_METRICS = {
-  logistic_regression: { accuracy: 0.887, precision: 0.901, recall: 0.871, f1: 0.886 },
-  naive_bayes:         { accuracy: 0.853, precision: 0.868, recall: 0.836, f1: 0.852 },
   svm:                 { accuracy: 0.912, precision: 0.924, recall: 0.899, f1: 0.911 },
+  logistic_regression: { accuracy: 0.887, precision: 0.901, recall: 0.871, f1: 0.886 },
   random_forest:       { accuracy: 0.894, precision: 0.908, recall: 0.879, f1: 0.893 },
+  naive_bayes:         { accuracy: 0.853, precision: 0.868, recall: 0.836, f1: 0.852 },
 }
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '')
+
 async function callPredict(review, rating) {
-  // If the FastAPI server is running on port 8000 (via Vite proxy or direct):
+  const endpoint = API_BASE_URL ? `${API_BASE_URL}/predict` : '/predict'
+  let res
   try {
-    const res = await fetch('/predict', {
+    res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ review, rating }),
     })
-    if (res.ok) {
-      return await res.json()
-    }
   } catch {
-    // Backend not running, proceed to smooth high-fidelity mock
+    throw new Error(
+      API_BASE_URL
+        ? `Failed to reach backend at ${API_BASE_URL}. Verify backend deployment and CORS configuration.`
+        : 'Failed to connect to backend at /predict. Ensure the FastAPI server is running or set VITE_API_BASE_URL.'
+    )
   }
 
-  // ── MOCK INFERENCE SIMULATION (Natural response behavior) ──
-  await new Promise(r => setTimeout(r, 1100))
-  const isSuspicious =
-    /best\s+product\s+ever|amazing\s+amazing|5\s+stars\s+is\s+not\s+enough|love\s+it!{2,}/i.test(
-      review
-    ) || (rating === 5 && review.length < 50)
-  
-  const score = isSuspicious ? 0.72 + Math.random() * 0.22 : 0.08 + Math.random() * 0.28
-  const isFake = score > 0.5
-
-  return {
-    label: isFake ? 'Fake' : 'Real',
-    confidence: parseFloat((isFake ? score : 1 - score).toFixed(4)),
-    fake_prob: parseFloat(score.toFixed(4)),
+  if (!res.ok) {
+    let errorDetail = `Backend HTTP error ${res.status}`
+    try {
+      const errData = await res.json()
+      if (errData && errData.detail) {
+        errorDetail = typeof errData.detail === 'string' ? errData.detail : JSON.stringify(errData.detail)
+      }
+    } catch {
+      // Body not JSON
+    }
+    throw new Error(errorDetail)
   }
+
+  return await res.json()
 }
 
 export default function App() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [metrics, setMetrics] = useState(MOCK_METRICS)
 
-  async function handleAnalyze({ review, rating }) {
+  useEffect(() => {
+    const metricsEndpoint = API_BASE_URL ? `${API_BASE_URL}/metrics` : '/metrics'
+    fetch(metricsEndpoint)
+      .then(res => (res.ok ? res.json() : null))
+      .then(data => {
+        if (data && (data.models || typeof data === 'object')) {
+          setMetrics(data)
+        }
+      })
+      .catch(() => {
+        // Fall back to baseline benchmark matrix
+      })
+  }, [])
+
+  const handleAnalyze = useCallback(async ({ review, rating }) => {
     setLoading(true)
     setResult(null)
     setError(null)
     try {
       const data = await callPredict(review, rating)
       setResult(data)
-    } catch {
-      setError('Telemetry interruption: Unable to process manuscript vectors. Please verify pipeline status.')
+    } catch (err) {
+      setError(err?.message || 'Analysis interrupted: Unable to process manuscript vectors. Please verify pipeline status.')
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   return (
     <div className={styles.app}>
-      <Background />
       <Header />
 
       <main className={styles.main} id="main-content">
-        <section className={styles.hero} aria-label="Review manuscript analysis">
+        <section className={styles.heroSection} aria-label="Review manuscript input">
           <ReviewForm onAnalyze={handleAnalyze} loading={loading} />
 
           {error && (
@@ -88,20 +104,20 @@ export default function App() {
         </section>
 
         <section className={styles.metricsSection} aria-label="Model performance benchmarks">
-          <MetricsPanel metrics={MOCK_METRICS} />
+          <MetricsPanel metrics={metrics} />
         </section>
       </main>
 
-      <footer className={styles.footer}>
+      <footer className={styles.footer} role="contentinfo">
         <div className={styles.footerInner}>
           <div className={styles.footerBrand}>
-            <Shield size={14} strokeWidth={2} />
-            <span>ReviewGuard Neural Architecture</span>
+            <Shield size={14} strokeWidth={2.2} />
+            <span>ReviewGuard</span>
           </div>
-          <span className={styles.footerDivider}>·</span>
-          <span>Machine Learning Systems Project</span>
-          <span className={styles.footerDivider}>·</span>
-          <span>Spatial Glass UI System</span>
+          <span className={styles.footerDot} aria-hidden="true">·</span>
+          <span>Machine Learning Systems</span>
+          <span className={styles.footerDot} aria-hidden="true">·</span>
+          <span>Calibrated Ensemble Architecture</span>
         </div>
       </footer>
     </div>

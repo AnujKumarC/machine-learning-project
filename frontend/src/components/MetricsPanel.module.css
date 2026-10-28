@@ -1,124 +1,266 @@
-/* MetricsPanel.module.css — Apple iOS 27 Metrics Panel */
-.panel {
-  position: relative;
-  z-index: 10;
+/* MetricsPanel.module.css — Apple Dark Model Benchmarks & Specs */
+.section {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 2rem;
 }
 
-.panelHeader {
+.header {
+  max-width: 720px;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
-.headerTag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  color: var(--clr-system-blue);
-  font-size: 0.75rem;
+.eyebrow {
+  font-size: 0.76rem;
   font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--clr-brand);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
 }
 
-.panelTitle {
-  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+.headline {
+  font-size: clamp(1.6rem, 3.2vw, 2.2rem);
   font-weight: 700;
-  color: #ffffff;
   letter-spacing: -0.03em;
-  line-height: 1.2;
+  line-height: 1.15;
+  color: var(--clr-text-primary);
 }
 
-.panelSubtitle {
-  font-size: 0.9rem;
+.subtitle {
+  font-size: 0.95rem;
   color: var(--clr-text-secondary);
-  line-height: 1.6;
-  max-width: 680px;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
 }
 
-/* ── Grid ── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 1.25rem;
-}
-
-/* ── Model Card ── */
-.modelCard {
-  background: var(--clr-surface-card);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+/* ── Champion Spotlight Card ── */
+.championSpotlight {
+  background: var(--clr-surface);
   border: 1px solid var(--clr-border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem 1.6rem;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  padding: 1.75rem 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  box-shadow: var(--glass-shadow);
-  transition: all var(--transition);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
   position: relative;
   overflow: hidden;
 }
 
-.modelCard::before {
+.championSpotlight:hover {
+  border-color: var(--clr-border-strong);
+}
+
+.championSpotlight::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--model-accent), transparent);
-  opacity: 0.7;
+  height: 3px;
+  background: var(--clr-warning);
 }
 
-.modelCard:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: var(--glass-card-hover);
-}
-
-.championCard {
-  border-color: rgba(255, 159, 10, 0.3);
-  box-shadow: 
-    0 24px 60px -15px rgba(255, 159, 10, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-/* ── Card Header ── */
-.cardHeader {
+.spotlightHeader {
   display: flex;
-  align-items: center;
-  gap: 0.85rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.iconEmblem {
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
-  background: rgba(var(--model-rgb), 0.12);
-  border: 1px solid rgba(var(--model-rgb), 0.25);
+.spotlightLeft {
   display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.championBadge {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  gap: 0.35rem;
+  background: var(--clr-warning-bg);
+  border: 1px solid var(--clr-warning-border);
+  color: var(--clr-warning);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  width: fit-content;
 }
 
-.icon {
-  color: var(--model-accent);
+.championTitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--clr-text-primary);
 }
 
-.titleArea {
+.championParadigm {
+  font-size: 0.82rem;
+  color: var(--clr-text-muted);
+}
+
+.championMetricHighlight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.championF1Value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--clr-warning);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.championF1Label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.35rem;
+}
+
+.championStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--clr-surface-elevated);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+}
+
+.championStat {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  flex: 1;
-  min-width: 0;
 }
 
-.titleRow {
+.statLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.statValue {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--clr-text-primary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.championNote {
+  font-size: 0.85rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.55;
+}
+
+/* ── Benchmark Matrix Card & Table ── */
+.matrixCard {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.matrixCard:hover {
+  border-color: var(--clr-border-strong);
+}
+
+.matrixHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--clr-border-subtle);
+  background: var(--clr-bg-secondary);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.matrixTitle {
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--clr-text-primary);
+}
+
+.matrixMeta {
+  font-size: 0.76rem;
+  color: var(--clr-text-muted);
+}
+
+.desktopTableWrapper {
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.thModel, .thMetric {
+  padding: 0.85rem 1.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--clr-bg-secondary);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.thMetric {
+  text-align: right;
+  width: 110px;
+}
+
+.tr {
+  border-bottom: 1px solid var(--clr-border-subtle);
+  transition: background-color var(--transition-fast);
+}
+
+.tr:last-child {
+  border-bottom: none;
+}
+
+.tr:hover {
+  background: var(--clr-surface-hover);
+}
+
+.trChampion {
+  background: rgba(242, 198, 109, 0.05);
+}
+
+.trChampion:hover {
+  background: rgba(242, 198, 109, 0.10);
+}
+
+.tdModel {
+  padding: 1rem 1.5rem;
+  vertical-align: middle;
+}
+
+.modelCell {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -126,172 +268,288 @@
 }
 
 .modelName {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--clr-text-primary);
   letter-spacing: -0.01em;
 }
 
-.championBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  background: rgba(255, 159, 10, 0.15);
-  border: 1px solid rgba(255, 159, 10, 0.35);
-  color: #ffb340;
-  font-size: 0.68rem;
+.miniChampionBadge {
+  font-size: 0.65rem;
   font-weight: 600;
-  padding: 0.15rem 0.5rem;
+  padding: 0.1rem 0.45rem;
   border-radius: var(--radius-full);
-  letter-spacing: 0.02em;
+  background: var(--clr-warning-bg);
+  color: var(--clr-warning);
+  border: 1px solid var(--clr-warning-border);
   text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-.modelSubtitle {
-  font-size: 0.73rem;
-  color: var(--clr-text-tertiary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.modelParadigm {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+  margin-top: 0.15rem;
+  line-height: 1.4;
 }
 
-.f1Capsule {
+.tdMetric {
+  padding: 1rem 1.5rem;
+  text-align: right;
+  vertical-align: middle;
+}
+
+.metricCell {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--clr-border-subtle);
-  padding: 0.35rem 0.65rem;
-  border-radius: var(--radius-sm);
-  flex-shrink: 0;
+  gap: 0.35rem;
 }
 
-.f1Label {
-  font-size: 0.65rem;
-  color: var(--clr-text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 600;
-}
-
-.f1Score {
+.num {
   font-size: 0.88rem;
-  font-weight: 700;
-  color: #ffffff;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* ── Metrics Grid ── */
-.metricsGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 0.9rem 1.1rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--clr-border-subtle);
-}
-
-.metricRow {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.metricKey {
-  font-size: 0.73rem;
   font-weight: 600;
-  color: var(--clr-text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  width: 72px;
-  flex-shrink: 0;
-}
-
-.metricBarWrap {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.metricBarTrack {
-  flex: 1;
-  height: 6px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.06);
-  overflow: hidden;
-}
-
-.metricBarFill {
-  height: 100%;
-  border-radius: var(--radius-full);
-  transition: width 1s var(--ease-spring);
-  animation: growBar 1s var(--ease-spring) both;
-}
-
-.metricBarValue {
-  font-size: 0.76rem;
-  font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--clr-text-secondary);
-  width: 44px;
-  text-align: right;
-  flex-shrink: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--clr-text-primary);
   font-variant-numeric: tabular-nums;
 }
 
-@keyframes growBar {
-  from {
-    width: 0 !important;
-  }
+.numHighlight {
+  color: var(--clr-warning);
+  font-weight: 700;
 }
 
-@media (max-width: 640px) {
-  .panelHeader {
-    gap: 0.35rem;
+.microTrack {
+  width: 64px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--clr-surface-elevated);
+  overflow: hidden;
+}
+
+.microFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--clr-brand);
+}
+
+/* ── Mobile-Optimized Stacked Benchmark Cards (< 600px) ── */
+.mobileCardsList {
+  display: none;
+}
+
+.mobileCard {
+  background: var(--clr-surface-elevated);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 0.95rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast);
+}
+
+.mobileCard:hover {
+  border-color: var(--clr-border-strong);
+}
+
+.mobileCardChampion {
+  border-color: rgba(242, 198, 109, 0.4);
+  background: linear-gradient(180deg, rgba(242, 198, 109, 0.08) 0%, var(--clr-surface-elevated) 100%);
+}
+
+.mobileCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.mobileCardTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.mobileCardNameRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.mobileCardName {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.mobileCardParadigm {
+  font-size: 0.72rem;
+  color: var(--clr-text-muted);
+  line-height: 1.35;
+}
+
+.mobileMetricsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem 0.85rem;
+  padding: 0.75rem 0.85rem;
+  background: var(--clr-surface-inset);
+  border: 1px solid var(--clr-border-subtle);
+  border-radius: var(--radius-sm);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mobileMetricItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.mobileMetricLabel {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mobileMetricValueGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+}
+
+.mobileMetricValue {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--clr-text-primary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.mobileCardSummary {
+  font-size: 0.76rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── Metric Definitions & Methodology ── */
+.definitionsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.defCard {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.defName {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.defText {
+  font-size: 0.78rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Responsive Breakpoints ── */
+
+/* Tablet range (600px - 1023px) */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .desktopTableWrapper {
+    display: block;
+    width: 100%;
   }
-  .panelTitle {
-    font-size: 1.35rem;
+  .mobileCardsList {
+    display: none;
   }
-  .panelSubtitle {
-    font-size: 0.84rem;
+  .thModel, .thMetric {
+    padding: 0.7rem 0.85rem;
+    font-size: 0.7rem;
   }
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 0.95rem;
+  .tdModel, .tdMetric {
+    padding: 0.85rem 0.85rem;
   }
-  .modelCard {
-    padding: 1.15rem;
-    gap: 1rem;
-    border-radius: var(--radius-md);
-  }
-  .cardHeader {
-    flex-wrap: nowrap;
-    gap: 0.7rem;
+  .thMetric {
+    width: auto;
+    min-width: 70px;
   }
   .modelName {
     font-size: 0.88rem;
   }
-  .modelSubtitle {
-    font-size: 0.7rem;
-  }
-  .f1Capsule {
-    padding: 0.25rem 0.5rem;
-  }
-  .f1Score {
-    font-size: 0.8rem;
-  }
-  .metricsGrid {
-    padding: 0.75rem 0.85rem;
-    gap: 0.55rem;
-  }
-  .metricKey {
-    width: 60px;
-    font-size: 0.7rem;
-  }
-  .metricBarValue {
-    width: 38px;
+  .modelParadigm {
     font-size: 0.72rem;
+  }
+  .microTrack {
+    width: 48px;
+  }
+  .definitionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile range (599px and below) */
+@media (max-width: 599px) {
+  .desktopTableWrapper {
+    display: none;
+  }
+  .mobileCardsList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .matrixHeader {
+    padding: 1rem 1.15rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+  .championStatsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+  }
+  .definitionsGrid {
+    grid-template-columns: 1fr;
+  }
+  .championSpotlight {
+    padding: 1.15rem;
+  }
+  .championF1Value {
+    font-size: 1.75rem;
+  }
+  .championMetricHighlight {
+    align-items: flex-start;
   }
 }

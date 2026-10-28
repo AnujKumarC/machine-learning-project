@@ -1,83 +1,21 @@
-/* Background.module.css — Apple Spatial Atmosphere */
+/* Background.module.css — Apple Clean Ambient Canvas */
 .bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background-color: #06080e;
+  background-color: var(--clr-bg);
+  transition: background-color var(--transition-normal);
 }
 
-/* Subtle optical grid */
-.lensGrid {
+/* Restrained, non-animating ambient illumination (Zero CPU/GPU cost) */
+.ambientTop {
   position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, black 20%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, black 20%, transparent 80%);
-}
-
-/* Apple Intelligence Spatial Orbs */
-.ambientAura1 {
-  position: absolute;
-  width: 720px;
-  height: 720px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(10, 132, 255, 0.16) 0%, rgba(94, 92, 230, 0.08) 45%, transparent 70%);
-  filter: blur(100px);
-  top: -240px;
-  left: 15%;
-  animation: floatAura1 24s ease-in-out infinite alternate;
-}
-
-.ambientAura2 {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(191, 90, 242, 0.12) 0%, rgba(10, 132, 255, 0.04) 50%, transparent 70%);
-  filter: blur(90px);
-  bottom: 5%;
-  right: -100px;
-  animation: floatAura2 20s ease-in-out infinite alternate;
-}
-
-.ambientAura3 {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(48, 209, 88, 0.08) 0%, transparent 70%);
-  filter: blur(80px);
-  top: 45%;
-  left: -150px;
-  animation: floatAura3 28s ease-in-out infinite alternate;
-}
-
-/* Subtle micro-texture overlay */
-.noiseOverlay {
-  position: absolute;
-  inset: 0;
-  opacity: 0.018;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-@keyframes floatAura1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(50px, 35px) scale(1.08); }
-  100% { transform: translate(-30px, 20px) scale(0.96); }
-}
-
-@keyframes floatAura2 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-45px, -40px) scale(1.1); }
-  100% { transform: translate(25px, -15px) scale(0.95); }
-}
-
-@keyframes floatAura3 {
-  0%   { transform: translate(0, 0) scale(0.95); }
-  100% { transform: translate(40px, -35px) scale(1.06); }
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 540px;
+  background: var(--ambient-wash);
+  opacity: 0.9;
 }

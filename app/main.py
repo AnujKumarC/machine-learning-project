@@ -29,19 +29,20 @@ from features   import add_numeric_features, NUMERIC_FEATURES
 
 # ── Paths ────────────────────────────────────────────────────
 ROOT_DIR     = os.path.join(os.path.dirname(__file__), "..")
-MODEL_PATH   = os.path.join(ROOT_DIR, "models", "best_model.pkl")
-METRICS_PATH = os.path.join(ROOT_DIR, "models", "metrics.json")
+MODEL_PATH   = os.getenv("MODEL_PATH", os.path.join(ROOT_DIR, "models", "best_model.pkl"))
+METRICS_PATH = os.getenv("METRICS_PATH", os.path.join(ROOT_DIR, "models", "metrics.json"))
 
 # ── Load model on startup ─────────────────────────────────────
-if not os.path.exists(MODEL_PATH):
-    raise RuntimeError(
-        f"Model not found at {MODEL_PATH}. "
-        "Run 'python src/train.py' first to train and save the model."
+MODEL = None
+if os.path.exists(MODEL_PATH):
+    print(f"[ReviewGuard] Loading model from {MODEL_PATH} …")
+    MODEL = joblib.load(MODEL_PATH)
+    print("[ReviewGuard] Model loaded. Server ready.")
+else:
+    print(
+        f"[ReviewGuard] Notice: Model not found at {MODEL_PATH}. "
+        "Inference endpoint will return 503 until model is trained or mounted."
     )
-
-print(f"[ReviewGuard] Loading model from {MODEL_PATH} …")
-MODEL = joblib.load(MODEL_PATH)
-print("[ReviewGuard] Model loaded. Server ready.")
 
 # ── Load cached metrics ────────────────────────────────────────
 METRICS = {}
@@ -56,10 +57,14 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS — allow the React dev server (port 5173) to call this API
+# CORS — allow the React dev server (5173), custom origins, and Cloudflare Pages (*.pages.dev)
+cors_origins_env = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173")
+cors_origins = [o.strip() for o in cors_origins_env.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=cors_origins,
+    allow_origin_regex=os.getenv("CORS_ORIGIN_REGEX", r"^https:\/\/.*\.pages\.dev$"),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -91,10 +96,16 @@ def _build_input_df(review: str, rating: float) -> pd.DataFrame:
 @app.get("/", tags=["Health"])
 def health_check():
     """Returns server status and the name of the loaded model."""
+    is_ready = MODEL is not None
     return {
-        "status": "ok",
-        "model":  METRICS.get("best_model", "unknown"),
-        "message": "ReviewGuard API is running.",
+        "status": "ok" if is_ready else "degraded",
+        "model_loaded": is_ready,
+        "model": METRICS.get("best_model", "unknown") if is_ready else None,
+        "message": (
+            "ReviewGuard API is running."
+            if is_ready
+            else "ReviewGuard API is running, but model weights are not loaded. Place best_model.pkl in models/."
+        ),
     }
 
 
@@ -107,6 +118,12 @@ def predict(payload: PredictRequest):
       - confidence : probability of the predicted class
       - fake_prob  : probability of being Fake (useful for frontend colour coding)
     """
+    if MODEL is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Model is not loaded. Ensure best_model.pkl is placed in models/ or train via src/train.py"
+        )
+
     try:
         input_df  = _build_input_df(payload.review, payload.rating)
         pred      = MODEL.predict(input_df)[0]          # 1 = Fake, 0 = Real

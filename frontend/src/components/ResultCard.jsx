@@ -1,13 +1,11 @@
 import { useEffect, useRef } from 'react'
-import { 
-  ShieldCheck, 
-  ShieldAlert, 
-  Scan, 
-  Activity, 
-  Sliders, 
-  Layers, 
-  Sparkles,
-  Info 
+import {
+  ShieldCheck,
+  ShieldAlert,
+  Sliders,
+  Activity,
+  Layers,
+  Info,
 } from 'lucide-react'
 import styles from './ResultCard.module.css'
 
@@ -22,16 +20,19 @@ export default function ResultCard({ result, loading }) {
 
   if (loading) {
     return (
-      <div className={styles.loadingCard} role="status" aria-live="polite" aria-label="Analyzing review manuscript">
+      <div
+        className={styles.loadingConsole}
+        role="status"
+        aria-live="polite"
+        aria-label="Analyzing review manuscript"
+      >
         <div className={styles.loadingInner}>
-          <div className={styles.radarRing1} aria-hidden="true" />
-          <div className={styles.radarRing2} aria-hidden="true" />
-          <div className={styles.loadingIconWrap} aria-hidden="true">
-            <Scan className={styles.scanIcon} size={28} strokeWidth={2} />
-          </div>
+          <div className={styles.loadingSpinner} aria-hidden="true" />
           <div className={styles.loadingTextGroup}>
             <p className={styles.loadingTitle}>Processing Linguistic Vectors</p>
-            <p className={styles.loadingSubtitle}>Evaluating TF-IDF n-grams &amp; VADER sentiment distribution…</p>
+            <p className={styles.loadingSubtitle}>
+              Calculating TF-IDF n-grams, VADER polarity, and rating concordance…
+            </p>
           </div>
         </div>
       </div>
@@ -46,119 +47,124 @@ export default function ResultCard({ result, loading }) {
   const realProb = (100 - parseFloat(fakeProb)).toFixed(1)
 
   return (
-    <div
+    <section
       ref={cardRef}
-      className={`${styles.card} ${isFake ? styles.cardFake : styles.cardReal}`}
+      className={`${styles.report} ${isFake ? styles.reportFake : styles.reportReal}`}
       role="region"
       aria-live="polite"
-      aria-label={`Classification result: ${result.label} review`}
+      aria-label={`Analysis result: ${result.label} review`}
     >
-      {/* Ambient optical flare */}
-      <div className={`${styles.glowAura} ${isFake ? styles.glowFake : styles.glowReal}`} aria-hidden="true" />
-
-      {/* Header Verdict Section */}
-      <div className={styles.verdictHeader}>
-        <div className={`${styles.badgeWrap} ${isFake ? styles.badgeFake : styles.badgeReal}`}>
-          <div className={styles.badgeGlass}>
+      {/* ── Verdict First ── */}
+      <div className={styles.verdictSection}>
+        <div className={styles.verdictLeft}>
+          <div className={`${styles.iconBadge} ${isFake ? styles.badgeFake : styles.badgeReal}`}>
             {isFake ? (
-              <ShieldAlert size={28} strokeWidth={2} className={styles.verdictIcon} />
+              <ShieldAlert size={26} strokeWidth={2.2} />
             ) : (
-              <ShieldCheck size={28} strokeWidth={2} className={styles.verdictIcon} />
+              <ShieldCheck size={26} strokeWidth={2.2} />
             )}
+          </div>
+
+          <div className={styles.verdictInfo}>
+            <span className={styles.kicker}>Model Verification Verdict</span>
+            <div className={styles.titleRow}>
+              <h2 className={`${styles.title} ${isFake ? styles.titleFake : styles.titleReal}`}>
+                {isFake ? 'Synthetic Review Detected' : 'Authentic Review Verified'}
+              </h2>
+              <span className={`${styles.statusPill} ${isFake ? styles.pillFake : styles.pillReal}`}>
+                {isFake ? 'High Risk' : 'Verified Signal'}
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className={styles.verdictTextGroup}>
-          <span className={styles.verdictKicker}>Classification Verdict</span>
-          <div className={styles.verdictTitleRow}>
-            <h2 className={`${styles.verdictTitle} ${isFake ? styles.titleFake : styles.titleReal}`}>
-              {isFake ? 'Synthetic (Fake)' : 'Authentic (Real)'}
-            </h2>
-            <span className={`${styles.statusPill} ${isFake ? styles.statusPillFake : styles.statusPillReal}`}>
-              {isFake ? 'High Risk' : 'Verified'}
-            </span>
-          </div>
+        {/* Confidence Score Display */}
+        <div className={styles.confidenceMetric}>
+          <span className={styles.confScore}>{confidencePct}%</span>
+          <span className={styles.confLabel}>Model Confidence</span>
         </div>
       </div>
 
-      {/* Main Confidence Gauge */}
-      <div className={styles.confidenceSection}>
-        <div className={styles.confHeader}>
-          <span className={styles.confLabel}>Model Classification Confidence</span>
-          <span className={`${styles.confValue} ${isFake ? styles.confFake : styles.confReal}`}>
-            {confidencePct}%
-          </span>
-        </div>
-
-        <div className={styles.barTrack} role="meter" aria-valuenow={confidencePct} aria-valuemin={0} aria-valuemax={100}>
+      {/* ── Confidence Second: Distribution Gauge ── */}
+      <div className={styles.gaugeSection}>
+        <div
+          className={styles.barTrack}
+          role="meter"
+          aria-valuenow={confidencePct}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
           <div
-            className={`${styles.barFill} ${isFake ? styles.barFake : styles.barReal}`}
+            className={`${styles.barFill} ${isFake ? styles.fillFake : styles.fillReal}`}
             style={{ width: `${confidencePct}%` }}
           />
         </div>
 
-        <div className={styles.splitDistribution}>
-          <div className={styles.splitItem}>
-            <span className={styles.splitDot} style={{ background: 'var(--clr-system-green)' }} />
-            <span className={styles.splitName}>Authentic Likelihood:</span>
-            <span className={styles.splitVal}>{realProb}%</span>
+        <div className={styles.probRow}>
+          <div className={styles.probItem}>
+            <span className={styles.probDot} style={{ background: 'var(--clr-system-green)' }} />
+            <span className={styles.probText}>Authentic Likelihood:</span>
+            <span className={styles.probNumber}>{realProb}%</span>
           </div>
-          <div className={styles.splitItem}>
-            <span className={styles.splitDot} style={{ background: 'var(--clr-system-red)' }} />
-            <span className={styles.splitName}>Synthetic Likelihood:</span>
-            <span className={styles.splitVal}>{fakeProb}%</span>
+          <div className={styles.probItem}>
+            <span className={styles.probDot} style={{ background: 'var(--clr-system-red)' }} />
+            <span className={styles.probText}>Synthetic Likelihood:</span>
+            <span className={styles.probNumber}>{fakeProb}%</span>
           </div>
         </div>
       </div>
 
-      {/* Apple Intelligence Feature Breakdown Grid */}
+      {/* ── Supporting Evidence Third: Diagnostic Signals ── */}
       <div className={styles.signalsGrid}>
-        <div className={styles.signalCard}>
-          <div className={styles.signalIconWrap}>
-            <Sliders size={16} strokeWidth={2} />
+        <div className={styles.signalCol}>
+          <div className={styles.signalHeader}>
+            <Sliders size={14} strokeWidth={2.2} className={styles.signalIcon} />
+            <span className={styles.signalTitle}>Syntactic Cadence</span>
           </div>
-          <div className={styles.signalContent}>
-            <span className={styles.signalTitle}>Syntactic Density</span>
-            <span className={styles.signalValue}>
-              {isFake ? 'Abnormal Punctuation' : 'Standard Cadence'}
-            </span>
-          </div>
+          <span className={styles.signalValue}>
+            {isFake ? 'Abnormal Punctuation Rhythm' : 'Natural Sentence Lengths'}
+          </span>
+          <span className={styles.signalSub}>
+            {isFake ? 'Exclamation density flags promotional tone' : 'Standard grammatical structure observed'}
+          </span>
         </div>
 
-        <div className={styles.signalCard}>
-          <div className={styles.signalIconWrap}>
-            <Activity size={16} strokeWidth={2} />
+        <div className={styles.signalCol}>
+          <div className={styles.signalHeader}>
+            <Activity size={14} strokeWidth={2.2} className={styles.signalIcon} />
+            <span className={styles.signalTitle}>Sentiment Concordance</span>
           </div>
-          <div className={styles.signalContent}>
-            <span className={styles.signalTitle}>Emotional Polarity</span>
-            <span className={styles.signalValue}>
-              {isFake ? 'Hyperbolic Skew' : 'Balanced Review'}
-            </span>
-          </div>
+          <span className={styles.signalValue}>
+            {isFake ? 'Rating–Sentiment Discordance' : 'Harmonious Emotional Valence'}
+          </span>
+          <span className={styles.signalSub}>
+            {isFake ? 'Review tone contradicts star rating' : 'Star rating matches text tone accurately'}
+          </span>
         </div>
 
-        <div className={styles.signalCard}>
-          <div className={styles.signalIconWrap}>
-            <Layers size={16} strokeWidth={2} />
+        <div className={styles.signalCol}>
+          <div className={styles.signalHeader}>
+            <Layers size={14} strokeWidth={2.2} className={styles.signalIcon} />
+            <span className={styles.signalTitle}>Lexical Diversity</span>
           </div>
-          <div className={styles.signalContent}>
-            <span className={styles.signalTitle}>Vocabulary Specifics</span>
-            <span className={styles.signalValue}>
-              {isFake ? 'Repetitive Tokens' : 'Specific Details'}
-            </span>
-          </div>
+          <span className={styles.signalValue}>
+            {isFake ? 'Repetitive Marketing Tokens' : 'Specific Experiential Context'}
+          </span>
+          <span className={styles.signalSub}>
+            {isFake ? 'Frequent generic superlatives detected' : 'Varied vocabulary with concrete details'}
+          </span>
         </div>
       </div>
 
-      {/* Explanatory summary callout */}
-      <div className={styles.summaryCallout}>
-        <Info size={16} strokeWidth={2} className={styles.calloutIcon} />
-        <p className={styles.summaryText}>
+      {/* ── Concise Evidence Summary ── */}
+      <div className={styles.evidenceCallout}>
+        <Info size={15} strokeWidth={2.2} className={styles.calloutIcon} />
+        <p className={styles.calloutText}>
           {isFake
-            ? 'This text exhibits strong markers of automated generation or promotional bias: disproportionate superlatives, extreme punctuation density, and superficial feedback.'
-            : 'Natural linguistic variation detected: balanced sentence lengths, realistic nuance, and authentic experiential vocabulary consistent with verified purchases.'}
+            ? 'This manuscript displays high probability markers of automated generation or compensated feedback: concentrated superlatives, excessive exclamation cadence, and superficial experiential nuance.'
+            : 'Natural linguistic variation detected: authentic sentence length distribution, balanced sentiment polarity, and specific experiential details consistent with verified human reviews.'}
         </p>
       </div>
-    </div>
+    </section>
   )
 }

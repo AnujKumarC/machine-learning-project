@@ -1,43 +1,58 @@
-import { ShieldCheck, Sparkles, Cpu } from 'lucide-react'
+import { ShieldCheck, Sparkles } from 'lucide-react'
 import styles from './Header.module.css'
 
 export default function Header() {
   return (
-    <header className={styles.header} role="banner">
-      <div className={styles.topBar}>
-        <div className={styles.systemCapsule}>
-          <span className={styles.statusPulse} aria-hidden="true" />
-          <Sparkles className={styles.capsuleIcon} size={13} strokeWidth={2.2} />
-          <span className={styles.capsuleText}>Neural Defense System · v4.2</span>
-        </div>
+    <header className={styles.header}>
+      {/* ── Minimal Dark Apple Navigation Bar ── */}
+      <nav className={styles.navBar} aria-label="Main navigation">
+        <div className={styles.navInner}>
+          <div className={styles.navLeft}>
+            <a href="#" className={styles.brand} aria-label="ReviewGuard Home">
+              <span className={styles.brandIconWrap} aria-hidden="true">
+                <ShieldCheck size={17} strokeWidth={2.4} />
+              </span>
+              <span className={styles.brandTitle}>ReviewGuard</span>
+            </a>
 
-        <div className={styles.badgeGroup}>
-          <div className={styles.specBadge}>
-            <Cpu size={12} strokeWidth={2} />
-            <span>4-Model Ensemble</span>
+            <div className={styles.navLinks}>
+              <a href="#workspace" className={styles.navLink}>
+                Workspace
+              </a>
+              <a href="#benchmarks" className={styles.navLink}>
+                Benchmarks
+              </a>
+              <a href="#methodology" className={styles.navLink}>
+                Methodology
+              </a>
+            </div>
+          </div>
+
+          <div className={styles.navRight}>
+            <div className={styles.modelStatus} title="Current champion classifier model">
+              <span className={styles.statusDot} aria-hidden="true" />
+              <span className={styles.statusModel}>Calibrated SVM</span>
+              <span className={styles.statusScore}>91.1% F1</span>
+            </div>
           </div>
         </div>
-      </div>
+      </nav>
 
-      <div className={styles.heroSection}>
-        <div className={styles.iconEmblem} aria-hidden="true">
-          <div className={styles.emblemGlass}>
-            <ShieldCheck className={styles.emblemIcon} size={32} strokeWidth={1.75} />
-          </div>
-          <div className={styles.emblemGlow} />
+      {/* ── Apple Editorial Hero Section ── */}
+      <section className={styles.heroSection} aria-label="Introduction">
+        <div className={styles.eyebrow}>
+          <Sparkles size={11} strokeWidth={2.4} aria-hidden="true" />
+          <span>TRUST EVERY REVIEW</span>
         </div>
-
-        <div className={styles.titleGroup}>
-          <h1 className={styles.title}>ReviewGuard</h1>
-          <p className={styles.subtitle}>Precision Authenticity Intelligence</p>
-        </div>
-      </div>
-
-      <p className={styles.tagline}>
-        Analyze customer reviews with multi-dimensional linguistic vectors.
-        Instant classification for <strong className={styles.realTag}>Genuine</strong> and{' '}
-        <strong className={styles.fakeTag}>Synthetic</strong> entries.
-      </p>
+        <h1 className={styles.headline}>Know what’s real.</h1>
+        <p className={styles.supportingLine}>
+          Discover the signals behind every review with intelligent authenticity analysis.
+        </p>
+        <p className={styles.description}>
+          ReviewGuard analyzes customer manuscripts against calibrated multi-dimensional
+          linguistic vectors, exposing synthetic marketing patterns and sentiment discordance in real time.
+        </p>
+      </section>
     </header>
   )
 }
