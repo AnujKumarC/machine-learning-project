@@ -3,7 +3,8 @@
 > Built with **Python (Scikit-Learn, NLTK, FastAPI)** & **React (Vite, Apple iOS 27 Design System)**
 
 🌐 **Live Web Application:** [https://thetruemava.pages.dev/](https://thetruemava.pages.dev/)  
-📂 **GitHub Repository:** [https://github.com/allanmaaz/MLP](https://github.com/allanmaaz/MLP)
+📂 **GitHub Repository:** [https://github.com/AnujKumarC/machine-learning-project](https://github.com/AnujKumarC/machine-learning-project)
+
 
 ---
 
@@ -262,8 +263,8 @@ Follow these steps to run the entire project on any machine.
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/allanmaaz/MLP.git
-cd MLP
+git clone https://github.com/AnujKumarC/machine-learning-project.git
+cd machine-learning-project
 ```
 
 ---
