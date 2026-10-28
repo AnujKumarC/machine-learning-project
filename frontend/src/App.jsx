@@ -18,34 +18,26 @@ const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '
 
 async function callPredict(review, rating) {
   const endpoint = API_BASE_URL ? `${API_BASE_URL}/predict` : '/predict'
-  try {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ review, rating }),
-    })
-    if (res.ok) {
-      return await res.json()
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ review, rating }),
+  })
+
+  if (!res.ok) {
+    let errorDetail = `Backend HTTP error ${res.status}`
+    try {
+      const errData = await res.json()
+      if (errData && errData.detail) {
+        errorDetail = typeof errData.detail === 'string' ? errData.detail : JSON.stringify(errData.detail)
+      }
+    } catch {
+      // Body not JSON
     }
-  } catch {
-    // Edge or backend temporarily unreachable; fall through to local inference
+    throw new Error(errorDetail)
   }
 
-  // Calibrated client-side inference fallback (ensures 100% uptime on edge static mirrors)
-  await new Promise(r => setTimeout(r, 550))
-  const isSuspicious =
-    /best\s+product\s+ever|amazing\s+amazing|5\s+stars\s+is\s+not\s+enough|love\s+it!{2,}|must\s+buy/i.test(
-      review
-    ) || (rating === 5 && (review.length < 60 || (review.match(/!/g) || []).length >= 3))
-
-  const score = isSuspicious ? 0.78 + Math.random() * 0.16 : 0.09 + Math.random() * 0.22
-  const isFake = score > 0.5
-
-  return {
-    label: isFake ? 'Fake' : 'Real',
-    confidence: parseFloat((isFake ? score : 1 - score).toFixed(4)),
-    fake_prob: parseFloat(score.toFixed(4)),
-  }
+  return await res.json()
 }
 
 export default function App() {
