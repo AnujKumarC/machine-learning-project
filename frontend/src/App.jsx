@@ -76,7 +76,7 @@ export default function App() {
       const data = await callPredict(review, rating)
       setResult(data)
     } catch (err) {
-      setError(err?.message || 'Analysis interrupted: Unable to process manuscript vectors. Please verify pipeline status.')
+      setError(err?.message || 'Analysis failed. Please check your input and try again.')
     } finally {
       setLoading(false)
     }
@@ -87,7 +87,7 @@ export default function App() {
       <Header />
 
       <main className={styles.main} id="main-content">
-        <section className={styles.heroSection} aria-label="Review manuscript input">
+        <section className={styles.heroSection} aria-label="Review analysis">
           <ReviewForm onAnalyze={handleAnalyze} loading={loading} />
 
           {error && (
@@ -114,9 +114,7 @@ export default function App() {
             <span>ReviewGuard</span>
           </div>
           <span className={styles.footerDot} aria-hidden="true">·</span>
-          <span>Machine Learning Systems</span>
-          <span className={styles.footerDot} aria-hidden="true">·</span>
-          <span>Calibrated Ensemble Architecture</span>
+          <span>Fake Review Detection</span>
         </div>
       </footer>
     </div>

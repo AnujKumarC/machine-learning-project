@@ -1,4 +1,4 @@
-import { ShieldCheck, Sparkles } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
 import styles from './Header.module.css'
 
 export default function Header() {
@@ -22,9 +22,6 @@ export default function Header() {
               <a href="#benchmarks" className={styles.navLink}>
                 Benchmarks
               </a>
-              <a href="#methodology" className={styles.navLink}>
-                Methodology
-              </a>
             </div>
           </div>
 
@@ -40,17 +37,9 @@ export default function Header() {
 
       {/* ── Apple Editorial Hero Section ── */}
       <section className={styles.heroSection} aria-label="Introduction">
-        <div className={styles.eyebrow}>
-          <Sparkles size={11} strokeWidth={2.4} aria-hidden="true" />
-          <span>TRUST EVERY REVIEW</span>
-        </div>
         <h1 className={styles.headline}>Know what’s real.</h1>
         <p className={styles.supportingLine}>
-          Discover the signals behind every review with intelligent authenticity analysis.
-        </p>
-        <p className={styles.description}>
-          ReviewGuard analyzes customer manuscripts against calibrated multi-dimensional
-          linguistic vectors, exposing synthetic marketing patterns and sentiment discordance in real time.
+          Instant AI detection for deceptive and synthetic reviews.
         </p>
       </section>
     </header>

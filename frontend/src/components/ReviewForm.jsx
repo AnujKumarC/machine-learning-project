@@ -6,13 +6,13 @@ const STAR_LABELS = ['', '1.0 Poor', '2.0 Fair', '3.0 Average', '4.0 Good', '5.0
 
 const SAMPLE_REVIEWS = [
   {
-    label: 'Suspicious Sample',
+    label: 'Fake Sample',
     type: 'fake',
     text: 'BEST PRODUCT EVER!!!! I bought this for my whole family and everyone LOVES it!!! 5 stars is not enough!! Will buy again and again!! Amazing amazing amazing!!!',
     rating: 5,
   },
   {
-    label: 'Verified Sample',
+    label: 'Real Sample',
     type: 'real',
     text: "I've been using this for about three weeks now. The build quality is decent but the battery life is shorter than advertised. Good for the price, but don't expect premium performance.",
     rating: 3,
@@ -78,7 +78,7 @@ export default function ReviewForm({ onAnalyze, loading }) {
       <div className={styles.consoleHeader}>
         <div className={styles.headerLeft}>
           <label htmlFor="review-textarea" className={styles.inputLabel}>
-            Review Manuscript
+            Input
           </label>
           <div className={styles.presetGroup}>
             {SAMPLE_REVIEWS.map((sample, idx) => (
@@ -105,7 +105,7 @@ export default function ReviewForm({ onAnalyze, loading }) {
             type="button"
             onClick={handleClear}
             className={styles.clearBtn}
-            title="Clear manuscript text"
+            title="Clear text"
           >
             <RotateCcw size={12} strokeWidth={2} />
             <span>Clear</span>
@@ -120,11 +120,11 @@ export default function ReviewForm({ onAnalyze, loading }) {
             ref={textareaRef}
             id="review-textarea"
             className={styles.textarea}
-            placeholder="Paste customer feedback, e-commerce review, or promotional testimonial to analyze its authenticity..."
+            placeholder="Paste product review to analyze..."
             value={review}
             onChange={e => setReview(e.target.value)}
             onKeyDown={handleKeyDown}
-            rows={6}
+            rows={5}
             maxLength={2000}
             required
             aria-required="true"
@@ -196,11 +196,11 @@ export default function ReviewForm({ onAnalyze, loading }) {
             {loading ? (
               <>
                 <span className={styles.spinner} aria-hidden="true" />
-                <span>Analyzing review…</span>
+                <span>Analyzing…</span>
               </>
             ) : (
               <>
-                <span>Analyze review</span>
+                <span>Analyze</span>
                 <ArrowRight size={14} strokeWidth={2.4} className={styles.btnArrow} />
               </>
             )}
